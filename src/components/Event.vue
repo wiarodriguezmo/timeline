@@ -4,8 +4,18 @@
             {{ cutMonth(months[month]) }}
         </span>
             
-        <span :style="{ margin: '0px ' + margin + '%' }" :class="[event.interest, event.status]" v-for="(event, key) in events" :key="key">
-        </span>
+        <div :style="{ margin: '0px ' + margin + '%' }" v-for="(event, key) in events" :key="key"
+            :class="[event.interest, event.status, {'show-tultip': event.tooltip}]"  class="tultip" v-bind:id="key" @click="tooltip(event)">
+            <div class="square-tooltip">
+                <span>
+                    {{ date(event.date) }}
+                </span><br>
+                <span>
+                    {{ event.name }}
+                </span><br>
+                <a v-if="event.url" :href="event.url" target="_blank">Ver más</a>
+            </div>
+        </div>
 
         <span style="float: right" v-if="month%2==1" class="month-name">
              {{ cutMonth(months[month]) }}
@@ -59,14 +69,27 @@ var calculateBorderColor = ((month, events) => {
     }
     return borderColor;
 });
-
+// oculta todos los tooltips abiertos
+document.getElementById("app").click(function () {
+    console.log(document.getElementsByClassName("show-tultip"));
+    //$(".tultip").removeClass("show-tultip");
+});
 
 export default {
   name: 'Event',
   methods: {
     cutMonth: ((text) => {
           return text.substring(0,3);
-      })
+      }),
+    date: ((date) => {
+        let event = new Date(date);
+        event.setMinutes(event.getMinutes() + event.getTimezoneOffset());
+        var options = { weekday: 'long', month: 'long', day: 'numeric' };
+        return event.toLocaleDateString('es-ES', options);
+      }),
+    tooltip: ((event) => {
+        event.tooltip = !event.tooltip;
+    })
   }, 
   props: ['events', 'month', 'months', 'status'],
   data: function () {

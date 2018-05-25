@@ -69,11 +69,6 @@ var calculateBorderColor = ((month, events) => {
     }
     return borderColor;
 });
-// oculta todos los tooltips abiertos
-document.getElementById("app").click(function () {
-    console.log(document.getElementsByClassName("show-tultip"));
-    //$(".tultip").removeClass("show-tultip");
-});
 
 export default {
   name: 'Event',
@@ -84,7 +79,7 @@ export default {
     date: ((date) => {
         let event = new Date(date);
         event.setMinutes(event.getMinutes() + event.getTimezoneOffset());
-        var options = { weekday: 'long', month: 'long', day: 'numeric' };
+        var options = { weekday: 'short', month: 'short', day: 'numeric' };
         return event.toLocaleDateString('es-ES', options);
       }),
     tooltip: ((event) => {
@@ -94,7 +89,7 @@ export default {
   props: ['events', 'month', 'months', 'status'],
   data: function () {
     return {
-      margin: (40 / this.events.length),
+      margin: (35 / this.events.length),
       borderColor: calculateBorderColor(this.month, this.events)
     }
   }   

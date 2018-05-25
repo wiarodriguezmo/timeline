@@ -55,7 +55,7 @@ var events = [
       "tooltip": false
   },
   {
-      "name": "Conversatorio #2: Dispositivos pedagógicos apoyados en tecnología digital...",
+      "name": "Conversatorio #2: Dispositivos pedagógicos apoyados en tecnología digital",
       "date": "2018-05-09",
       "hour": "",
       "front": "two",
@@ -1134,6 +1134,17 @@ var groupByMonth = (list) => {
   }
   return temp;
 }
+var setColorByMonth = (actual) => {
+    actual = actual + "";
+      events.forEach((elem) => {
+        let d = new Date(elem.date);
+        d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
+        if(actual=="" || d.getMonth() == actual)
+          elem.status = "visible";
+        else elem.status = "hidden";
+      })
+      paintLinesMonths(groupByMonth(events));
+}
 paintLinesMonths(groupByMonth(events));
 export default {
   name: 'App',
@@ -1141,10 +1152,17 @@ export default {
     events.sort(function (a, b) {
         return new Date(a.date) - new Date(b.date);
     });
-    let index = events.findIndex((event) => {
-        return new Date(event.date) > new Date() && event.interest != "two";
-    });
-    events[index].tooltip = true;
+    // let index = events.findIndex((event) => {
+    //     return new Date(event.date) > new Date() && event.interest != "two";
+    // });
+    // events[index].tooltip = true;
+
+    // forEach((item)=> {
+    //     if(new Date(item.date).getMonth() == new Date().getMonth())
+    //         item.tooltip = true;
+    // });
+
+    setColorByMonth(new Date().getMonth()+"")
   },
   methods: {
     resetSelects: ((options, actual) => {
@@ -1152,6 +1170,9 @@ export default {
         options.interest = actual=="interest"?options.interest:"";
         options.activity = actual=="activity"?options.activity:"";
         options.month = actual=="month"?options.month:"";
+        events.forEach((elem) => { 
+            elem.tooltip = false;
+        });
     }),
     setColorByFilter: ((options, actual) => {
       events.forEach((elem) => {
@@ -1161,17 +1182,7 @@ export default {
       });
       paintLinesMonths(groupByMonth(events));
     }),
-    setColorByMonth: ((actual) => {
-      actual = actual + "";
-      events.forEach((elem) => {
-        let d = new Date(elem.date);
-        d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
-        if(actual=="" || d.getMonth() == actual)
-          elem.status = "visible";
-        else elem.status = "hidden";
-      })
-      paintLinesMonths(groupByMonth(events));
-    }),
+    setColorByMonth: setColorByMonth
   },
   components: {
     Event
@@ -1180,7 +1191,7 @@ export default {
     return {
       selected: {
         front: '',
-        month: '',
+        month: 4,
         interest: '',
         activity: ''
       },
@@ -1190,6 +1201,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style  lang="scss">
@@ -1215,7 +1227,7 @@ export default {
       background-color: $color;
     }
     .square-tooltip {
-      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAYCAYAAACMcW/9AAAACXBIWXMAAAsSAAALEgHS3X78AAAB+ElEQVRIx81Xy3HDIBB99rgA0oFKUAmUoBJIB0oHKkGnnNVBKEHnnChBl9zVwebgx8yGQbaIcJw3w7BCgB77Y3USEVSEAzDhAThVJDoBaAAYAAvHeiUfUsC5IkkAsABGACuAQA3XQAMROdKMiMwi4pLxVq6wB/ePbTiiUQNgpjZTvwwAXqndn5q5tmKci00AeAADSZqCtS3XzJTLUGgCJyKdiATK0cTtDtOvIjKISE/ZPNL0hmZu2VsAb+ydSlEdTW8517O3ao5Xz1XTU/TJUfmkSfzTsHk+fwJ4V3NmpivtAoOav4XhkiHj2IdkA6N8cuI7rwKmoeyZngyAF8oLSS1sTZJ7i4MpBgoAfCR5cKFJRx6iV2Z2NGM8SEcCX5w/cr3eb1SHKw4mHRgDc2Qud44i4hksy0YwpeOBgWSStbuCKR1YRGTiB1bKuYWRiL8xZ0reOZINXJe7KHYTjQSEG91KIfEwOW1atjV517EV30xHrzabIevpGrlDVLtCewbKrCL1HjyDxKkbaGUfapVmOj0NjEKrPjSRwNYHY141XNco8gtqgqpt6OQ5Pww7KqjYT4VXY7HpB5odmSooMC9uYVW9U89VcU4qmxzGO0T/BGd1tW0h/LaGfIRG7Y3a0uIf4EKNLUlVlP4PTc8mGss8XTXlUtD8ZJ72Gx0gAOYwtk55AAAAAElFTkSuQmCC') 10px no-repeat, $color;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAYCAYAAACMcW/9AAAACXBIWXMAAAsSAAALEgHS3X78AAAB+ElEQVRIx81Xy3HDIBB99rgA0oFKUAmUoBJIB0oHKkGnnNVBKEHnnChBl9zVwebgx8yGQbaIcJw3w7BCgB77Y3USEVSEAzDhAThVJDoBaAAYAAvHeiUfUsC5IkkAsABGACuAQA3XQAMROdKMiMwi4pLxVq6wB/ePbTiiUQNgpjZTvwwAXqndn5q5tmKci00AeAADSZqCtS3XzJTLUGgCJyKdiATK0cTtDtOvIjKISE/ZPNL0hmZu2VsAb+ydSlEdTW8517O3ao5Xz1XTU/TJUfmkSfzTsHk+fwJ4V3NmpivtAoOav4XhkiHj2IdkA6N8cuI7rwKmoeyZngyAF8oLSS1sTZJ7i4MpBgoAfCR5cKFJRx6iV2Z2NGM8SEcCX5w/cr3eb1SHKw4mHRgDc2Qud44i4hksy0YwpeOBgWSStbuCKR1YRGTiB1bKuYWRiL8xZ0reOZINXJe7KHYTjQSEG91KIfEwOW1atjV517EV30xHrzabIevpGrlDVLtCewbKrCL1HjyDxKkbaGUfapVmOj0NjEKrPjSRwNYHY141XNco8gtqgqpt6OQ5Pww7KqjYT4VXY7HpB5odmSooMC9uYVW9U89VcU4qmxzGO0T/BGd1tW0h/LaGfIRG7Y3a0uIf4EKNLUlVlP4PTc8mGss8XTXlUtD8ZJ72Gx0gAOYwtk55AAAAAElFTkSuQmCC') center 5px no-repeat, $color;
     }
   }
 
@@ -1247,7 +1259,7 @@ export default {
   }
   .month {
     position: relative;
-    height: 70px;
+    height: 140px;
     border-bottom: none !important;
 
     &:nth-child(odd) {
@@ -1275,13 +1287,12 @@ export default {
     > .square-tooltip {
       visibility: hidden;
       position: absolute;
-      width: 175px;
-      height: 60px;
-      font-size: 11px;
-      letter-spacing: 0.5px;
-      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAVCAYAAADM+lfpAAAACXBIWXMAAAsSAAALEgHS3X78AAABl0lEQVRIx71Wy42EMAx9g6aAlJDTHvZECSlhTnumBEpICZSQElICJVBCSqCDt5cXyULMDr/FkpXEgP3G9nPmQRInxGstuECeJ75tAWTtR609gPmgv645CeQlnY39eJZJ7tWWZNFabZ7kTDIc8Fc17gXR/hE0kBzNuSM5/AeYSDIJSEdyIunMcydba4CMJPMOQLHZwZqinijSHoCTdrI500MOwCR7vIpNHkBQkGICWTbNevYN4EfnQWuvd5JAvxWbGScHWcGtvQhMUoBs6AxlwAH4MvZifKUtTLNgBn04yokzgWxJghy3svfm3bpPAm999x9rYBpoFCOcqLtkTKVvZZRfeVabelDDd/KVtd/MpiiHk/Qdvf+idjbnJD9h4/yJa8HChnljqV2pvhyEu4ee7Zmg2sYPVKyMiuoPrz57qb8OS2PulEEOg6HmmsyL+6myZTp9bStFy4kK1T9svCJwgcZGv3Bcufr7T0NK2ZhwkTQqTX7TGx43SmPG+5q4O8E81XxZoKp6ZSzeCeah/8DtYnzXMqUbsYRf9J9PP9uFv0gAAAAASUVORK5CYII=');
+      width: 60px;
+      height: 70px;
+      font-size: 9px;
+    //   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAVCAYAAADM+lfpAAAACXBIWXMAAAsSAAALEgHS3X78AAABl0lEQVRIx71Wy42EMAx9g6aAlJDTHvZECSlhTnumBEpICZSQElICJVBCSqCDt5cXyULMDr/FkpXEgP3G9nPmQRInxGstuECeJ75tAWTtR609gPmgv645CeQlnY39eJZJ7tWWZNFabZ7kTDIc8Fc17gXR/hE0kBzNuSM5/AeYSDIJSEdyIunMcydba4CMJPMOQLHZwZqinijSHoCTdrI500MOwCR7vIpNHkBQkGICWTbNevYN4EfnQWuvd5JAvxWbGScHWcGtvQhMUoBs6AxlwAH4MvZifKUtTLNgBn04yokzgWxJghy3svfm3bpPAm999x9rYBpoFCOcqLtkTKVvZZRfeVabelDDd/KVtd/MpiiHk/Qdvf+idjbnJD9h4/yJa8HChnljqV2pvhyEu4ee7Zmg2sYPVKyMiuoPrz57qb8OS2PulEEOg6HmmsyL+6myZTp9bStFy4kK1T9svCJwgcZGv3Bcufr7T0NK2ZhwkTQqTX7TGx43SmPG+5q4O8E81XxZoKp6ZSzeCeah/8DtYnzXMqUbsYRf9J9PP9uFv0gAAAAASUVORK5CYII=');
       color: white;
-      padding: 10px 10px 10px 60px;
+      padding: 35px 6px 0px 6px;
       z-index: 1;
       border-radius: 3px;
       
@@ -1299,6 +1310,10 @@ export default {
       a {
           color: white;
       }
+    }
+    &.visible > .square-tooltip {
+        
+      visibility: visible;
     }
   }
   
@@ -1328,7 +1343,9 @@ export default {
         margin-left: 4px;
     }
     .square-tooltip {
-      bottom: 35px;
+      bottom: 155px;
+      margin-left: -8px;
+      font-size: 8px;
     }
       
         

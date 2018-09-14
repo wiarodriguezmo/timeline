@@ -73,17 +73,19 @@ var events = [
       "interest": "one",
       "activity": "Conversatorios",
       "status": "visible",
-      "tooltip": false
+      "tooltip": false,
+      "url": "https://conectate.uniandes.edu.co/index.php/eventos/555-conversatorio-3-aprendizaje-conjetural"
   },
   {
       "name": "Conversatorio #4",
-      "date": "2018-09-10",
+      "date": "2018-09-26",
       "hour": "",
       "front": "three",
       "interest": "one",
       "activity": "Conversatorios",
       "status": "visible",
-      "tooltip": false
+      "tooltip": false,
+      "url": "https://conectate.uniandes.edu.co/index.php/eventos/572-conversatorio-4-blended-learning-en-educacion-superior"
   },
   {
       "name": "Conversatorio #5",
@@ -113,7 +115,8 @@ var events = [
       "interest": "three",
       "activity": "Conecta-TE Explorando",
       "status": "visible",
-      "tooltip": false
+      "tooltip": false,
+      "url": "https://conectate.uniandes.edu.co/index.php/eventos/554-conecta-te-explorando-diseno-elaboracion-y-comunicacion-de-contenidos-con-videos-e-infografias"
   },
   {
       "name": "Conecta-TE Explorando #3",
@@ -232,7 +235,7 @@ var events = [
       "front": "two",
       "interest": "two",
       "activity": "Citas con Conecta-TE",
-      "url": "https://outlook.office365.com/owa/calendar/UniversidaddelosAndes@uniandes.onmicrosoft.com/bookings/",
+      "url": "https://conectate.uniandes.edu.co/index.php/eventos/533-participacion-en-ambientes-de-aprendizaje",
       "status": "visible",
       "tooltip": false
   },
@@ -452,7 +455,7 @@ var events = [
       "front": "three",
       "interest": "two",
       "activity": "Citas con Conecta-TE",
-      "url": "https://outlook.office365.com/owa/calendar/UniversidaddelosAndes@uniandes.onmicrosoft.com/bookings/",
+      "url": "https://conectate.uniandes.edu.co/index.php/eventos/570-aprendizaje-colaborativo",
       "status": "visible",
       "tooltip": false
   },
